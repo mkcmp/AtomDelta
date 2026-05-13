@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AtomDelta is the validation layer for late hardware changes, turning human and AI-generated proposals into margin checks, rejected paths, evidence gaps, and human-reviewable decision packets.">
+  <title>AtomDelta</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101827'/%3E%3Cpath d='M16 48 32 14l16 34h-8l-3-7H27l-3 7h-8Zm14-14h4l-2-5-2 5Z' fill='%23f8fafc'/%3E%3Cpath d='M42 15h7v34h-7V15Z' fill='%230f766e'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --ink: #101827;
+      --muted: #596273;
+      --panel: #ffffff;
+      --line: #d9e0ea;
+      --navy: #101827;
+      --navy-2: #172234;
+      --teal: #0f766e;
+      --teal-soft: #ecfdf5;
+      --amber: #b45309;
+      --amber-soft: #fff7ed;
+      --red: #b91c1c;
+      --red-soft: #fef2f2;
+      --blue: #1d4ed8;
+      --blue-soft: #eff6ff;
+      --shadow: 0 18px 42px rgba(15, 23, 42, 0.09);
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top right, rgba(15, 118, 110, 0.12), transparent 34rem),
+        linear-gradient(180deg, #eef3f9 0%, var(--bg) 38%, #ffffff 100%);
+      color: var(--ink);
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(1160px, calc(100vw - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 22px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: block;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .nav-links a {
+      padding: 8px 11px;
+      border: 1px solid rgba(16, 24, 39, 0.12);
+      border-radius: 999px;
+      color: #334155;
+      font-size: 0.82rem;
+      font-weight: 760;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.62fr);
+      gap: 22px;
+      align-items: stretch;
+      padding: 18px 0 34px;
+    }
+
+    .hero-main,
+    .hero-proof,
+    .section {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      min-height: 520px;
+      display: grid;
+      align-content: end;
+      gap: 28px;
+      padding: clamp(28px, 5vw, 48px);
+      background: linear-gradient(145deg, var(--navy) 0%, var(--navy-2) 58%, #0f766e 145%);
+      color: #f8fafc;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-main::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -42% 42%;
+      height: 360px;
+      border-radius: 999px;
+      background: rgba(20, 184, 166, 0.14);
+      filter: blur(18px);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      color: #94a3b8;
+      font-size: 0.74rem;
+      font-weight: 860;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p { margin: 0; }
+
+    h1 {
+      max-width: 780px;
+      font-size: clamp(2.85rem, 7.5vw, 6.35rem);
+      line-height: 0.9;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 790px;
+      display: grid;
+      gap: 13px;
+      color: rgba(248, 250, 252, 0.82);
+      font-size: clamp(1.05rem, 2vw, 1.24rem);
+      line-height: 1.42;
+    }
+
+    .hero-copy strong { color: #ffffff; }
+
+    .hero-proof {
+      display: grid;
+      align-content: stretch;
+      gap: 14px;
+      padding: 20px;
+      background: #ffffff;
+    }
+
+    .proof-card {
+      display: grid;
+      gap: 8px;
+      min-height: 106px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 10px;
+      background: #f8fafc;
+    }
+
+    .proof-card strong {
+      font-size: 1.03rem;
+      line-height: 1.18;
+    }
+
+    .proof-card p,
+    .section p,
+    li {
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.52;
+    }
+
+    .proof-good { border-left-color: var(--teal); background: var(--teal-soft); }
+    .proof-warn { border-left-color: var(--amber); background: var(--amber-soft); }
+    .proof-bad { border-left-color: var(--red); background: var(--red-soft); }
+
+    .grid {
+      display: grid;
+      gap: 22px;
+      padding: 12px 0 40px;
+    }
+
+    .section {
+      display: grid;
+      gap: 22px;
+      padding: clamp(24px, 4vw, 38px);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(250px, 0.48fr);
+      gap: 18px;
+      align-items: end;
+    }
+
+    h2 {
+      max-width: 780px;
+      font-size: clamp(1.75rem, 3vw, 2.75rem);
+      line-height: 1.03;
+      letter-spacing: 0;
+    }
+
+    .section-kicker {
+      justify-self: end;
+      display: grid;
+      gap: 6px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 0.86rem;
+      line-height: 1.42;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .step,
+    .case-card,
+    .truth-card,
+    .future-card {
+      min-width: 0;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #ffffff;
+    }
+
+    .step {
+      min-height: 220px;
+      border-top: 3px solid var(--teal);
+    }
+
+    .step-num {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #e2e8f0;
+      color: #334155;
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 0.8rem;
+      font-weight: 850;
+    }
+
+    .step h3,
+    .case-card h3,
+    .truth-card h3,
+    .future-card h3 {
+      font-size: 1.08rem;
+      line-height: 1.2;
+    }
+
+    .step:nth-child(2) .step-num { background: var(--blue-soft); color: var(--blue); }
+    .step:nth-child(3) .step-num { background: var(--red-soft); color: var(--red); }
+    .step:nth-child(4) .step-num { background: var(--teal-soft); color: var(--teal); }
+
+    .decision-strip {
+      display: grid;
+      grid-template-columns: 0.92fr 1.1fr 1fr;
+      gap: 12px;
+    }
+
+    .case-card {
+      min-height: 260px;
+      border-top: 5px solid var(--blue);
+    }
+
+    .case-card.rejected { border-top-color: var(--red); background: var(--red-soft); }
+    .case-card.selected { border-top-color: var(--teal); background: var(--teal-soft); }
+
+    .metric-row {
+      display: grid;
+      gap: 7px;
+      margin-top: 4px;
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 0.82rem;
+      color: #334155;
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 9px;
+      border: 1px solid rgba(15, 23, 42, 0.1);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .metric b { color: var(--ink); }
+
+    .truth-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .truth-card {
+      min-height: 148px;
+      border-left: 5px solid var(--line);
+      border-top: 3px solid var(--teal);
+      background: #f8fafc;
+    }
+
+    .future {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .future-card {
+      min-height: 250px;
+      background: #0f172a;
+      color: #f8fafc;
+      border-color: rgba(248, 250, 252, 0.14);
+    }
+
+    .future-card p,
+    .future-card li { color: rgba(248, 250, 252, 0.74); }
+
+    .code-loop {
+      display: grid;
+      gap: 7px;
+      padding: 17px;
+      border-radius: 10px;
+      background: #020617;
+      color: #d1fae5;
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      font-size: 0.82rem;
+      line-height: 1.42;
+      overflow-x: auto;
+    }
+
+    .boundary {
+      display: grid;
+      gap: 11px;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 22px;
+      background: #f8fafc;
+    }
+
+    .boundary strong {
+      color: var(--muted);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .cta {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      padding: 28px;
+      border-radius: 14px;
+      background: var(--navy);
+      color: #f8fafc;
+    }
+
+    .cta p { color: rgba(248, 250, 252, 0.74); }
+
+    .cta-note {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 11px 15px;
+      border: 1px solid rgba(248, 250, 252, 0.22);
+      border-radius: 999px;
+      background: #f8fafc;
+      color: #0f172a;
+      font-weight: 820;
+      white-space: nowrap;
+    }
+
+    footer {
+      padding: 18px 0 34px;
+      color: #64748b;
+      font-size: 0.84rem;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .section-head,
+      .decision-strip,
+      .future,
+      .cta {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-main { min-height: 430px; }
+      .flow,
+      .truth-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-kicker { justify-self: stretch; }
+      .cta-note { justify-self: start; }
+    }
+
+    @media (max-width: 640px) {
+      .shell { width: min(100vw - 22px, 1160px); }
+      .nav { align-items: flex-start; flex-direction: column; }
+      .hero { padding-top: 6px; }
+      .hero-main { padding: 25px; }
+      h1 { font-size: clamp(2.42rem, 14vw, 3.95rem); }
+      .flow,
+      .truth-grid { grid-template-columns: 1fr; }
+      .step { min-height: auto; }
+      .metric { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell nav">
+    <div class="brand" aria-label="AtomDelta">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg">
+          <rect width="64" height="64" rx="14" fill="#101827"></rect>
+          <path d="M16 48 32 14l16 34h-8l-3-7H27l-3 7h-8Zm14-14h4l-2-5-2 5Z" fill="#f8fafc"></path>
+          <path d="M42 15h7v34h-7V15Z" fill="#0f766e"></path>
+        </svg>
+      </div>
+      <span>AtomDelta</span>
+    </div>
+    <nav class="nav-links" aria-label="Page sections">
+      <a href="#workflow">Workflow</a>
+      <a href="#proof">Demo proof</a>
+      <a href="#stage">Stage</a>
+      <a href="#north-star">North Star</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-main">
+        <div>
+          <p class="eyebrow">Engineering decision closure</p>
+          <h1 id="hero-title">Hardware review is the bottleneck.</h1>
+        </div>
+        <div class="hero-copy">
+          <p><strong>AI creates more plausible fixes. AtomDelta shows which ones survive validation by turning them into margin checks, rejected paths, evidence gaps, and human-reviewable decision packets.</strong></p>
+          <p>The first wedge is bounded hardware reviews where teams need to prove whether a tempting fix actually closes the governing constraint.</p>
+        </div>
+      </div>
+      <aside class="hero-proof" aria-label="Current proof status">
+        <article class="proof-card proof-good">
+          <p class="eyebrow">Built</p>
+          <strong>Working prototype</strong>
+          <p>Deterministic evaluator, margin ledger, claim ledger, review actions, packet export, rejected-branch memory, and frontend demo.</p>
+        </article>
+        <article class="proof-card proof-warn">
+          <p class="eyebrow">Current stage</p>
+          <strong>Working prototype</strong>
+          <p>The demo uses synthetic and public-data cases. It is decision-support evidence, not customer validation or hardware approval.</p>
+        </article>
+        <article class="proof-card">
+          <p class="eyebrow">Next proof</p>
+          <strong>Three real shadow cases</strong>
+          <p>The 90-day test is whether real hardware teams say the packet would have improved a historical review.</p>
+        </article>
+      </aside>
+    </section>
+
+    <div class="grid">
+      <section id="workflow" class="section" aria-labelledby="workflow-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">What it does</p>
+            <h2 id="workflow-title">From option flood to reviewable engineering decision.</h2>
+          </div>
+          <p class="section-kicker">AtomDelta turns human and AI-generated proposals into testable claims, margins, rejected branches, and reviewer actions before a team commits to an unproven hardware branch.</p>
+        </div>
+        <div class="flow">
+          <article class="step">
+            <div class="step-num">01</div>
+            <h3>Change enters</h3>
+            <p>A late requirement, component substitution, payload increase, or schedule-driven proposal crosses power, thermal, mass, qualification, or evidence boundaries.</p>
+          </article>
+          <article class="step">
+            <div class="step-num">02</div>
+            <h3>Proposals become claims</h3>
+            <p>Human, AI, vendor, or solver suggestions are normalized into explicit claims, affected margins, assumptions, evidence needs, and reviewer ownership.</p>
+          </article>
+          <article class="step">
+            <div class="step-num">03</div>
+            <h3>Weak branches die</h3>
+            <p>The margin ledger checks whether a tempting fix closes the governing constraint or merely patches a local symptom while leaving the real blocker open.</p>
+          </article>
+          <article class="step">
+            <div class="step-num">04</div>
+            <h3>Humans review the packet</h3>
+            <p>The output is a replayable packet: rejected path, conditional path, margin math, evidence gaps, reviewer questions, and approval boundaries.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="proof" class="section" aria-labelledby="proof-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Demo proof</p>
+            <h2 id="proof-title">The satellite case rejects the cheap fix.</h2>
+          </div>
+          <p class="section-kicker">A reviewed synthetic EO-bus case receives a late payload duty-cycle change. Average power, peak power, thermal rejection, and mass move together.</p>
+        </div>
+        <div class="decision-strip">
+          <article class="case-card">
+            <p class="eyebrow">Late change</p>
+            <h3>Payload duty cycle increases</h3>
+            <p>The change pushes a standardized bus outside the current envelope and forces a bounded review across power, thermal, mass, and schedule.</p>
+            <div class="metric-row">
+              <div class="metric"><span>Average power</span><b>82 W -> 122 W</b></div>
+              <div class="metric"><span>Peak power</span><b>145 W -> 205 W</b></div>
+              <div class="metric"><span>Thermal load</span><b>1.00x -> 1.12x</b></div>
+            </div>
+          </article>
+          <article class="case-card rejected">
+            <p class="eyebrow">Rejected false path</p>
+            <h3>Battery-only looks attractive but fails the governing constraint.</h3>
+            <p>Stored energy can help local peaks, but it does not restore sustained generation margin. The real blocker stays open.</p>
+            <div class="metric-row">
+              <div class="metric"><span>Path A result</span><b>still -8 W short</b></div>
+              <div class="metric"><span>Decision</span><b>reject false fix</b></div>
+            </div>
+          </article>
+          <article class="case-card selected">
+            <p class="eyebrow">Conditional path</p>
+            <h3>Generation recovery closes the first blocker, not the whole design.</h3>
+            <p>Thermal, mass, qualification, pointing, and schedule remain reviewer-owned gaps. AtomDelta preserves those unknowns instead of pretending approval.</p>
+            <div class="metric-row">
+              <div class="metric"><span>Average margin</span><b>+11 W</b></div>
+              <div class="metric"><span>Approval</span><b>human review required</b></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="stage" class="section" aria-labelledby="stage-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Stage</p>
+            <h2 id="stage-title">The validation environment is the wedge. Outcome memory is the moat.</h2>
+          </div>
+          <p class="section-kicker">The prototype demonstrates the primitive: proposed fixes are validated by margin ledgers and witness evidence. The company becomes defensible when real cases compound into outcome memory.</p>
+        </div>
+        <div class="truth-grid">
+          <article class="truth-card">
+            <h3>Proof state</h3>
+            <p>AtomDelta is not claiming revenue, customer validation, or proprietary outcome data yet.</p>
+          </article>
+          <article class="truth-card">
+            <h3>Moat to build</h3>
+            <p>The defensible layer must become outcome-linked review memory, evaluator contracts, rejected-branch patterns, and evidence standards.</p>
+          </article>
+          <article class="truth-card">
+            <h3>Falsifiable</h3>
+            <p>The next milestone is three redacted historical shadow cases and one design partner who says the packet would have improved the review.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="north-star" class="section" aria-labelledby="north-star-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Long-term direction</p>
+            <h2 id="north-star-title">A modern Gym for engineering agents in the physical world.</h2>
+          </div>
+          <p class="section-kicker">Late hardware changes are the first bounded loop where the validation environment can be proven. The larger company is the validation layer for AI-generated physical engineering options.</p>
+        </div>
+        <div class="future">
+          <article class="future-card">
+            <h3>Where proposed fixes become proof obligations</h3>
+            <p>AtomDelta turns the option flood from AI systems, vendors, solvers, and humans into proof obligations, rejected branches, evidence gaps, and human-reviewable decisions.</p>
+            <ul>
+              <li>Models propose branches.</li>
+              <li>Simulators, logs, CAE, and lab benches testify as witnesses.</li>
+              <li>AtomDelta records what survives review and why.</li>
+            </ul>
+          </article>
+          <div class="code-loop" aria-label="AtomDelta loop">
+            <span>AI / human / vendor proposes branch</span>
+            <span>-> AtomDelta converts it into claims</span>
+            <span>-> witnesses provide simulator, log, CAE, or lab evidence</span>
+            <span>-> margin ledger scores governing constraints</span>
+            <span>-> false branches are rejected</span>
+            <span>-> reviewer gaps stay open</span>
+            <span>-> outcome memory compounds</span>
+            <span>-> the next agent gets a better review environment</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="boundary" aria-label="Boundary statement">
+        <strong>Boundary: AtomDelta does not approve hardware.</strong>
+        <p>It produces decision-support packets for human reviewers. The current public proof uses synthetic and public-data cases; real customer-reviewed cases are the next required milestone.</p>
+      </section>
+
+      <section class="cta" aria-label="Design partner call to action">
+        <div>
+          <p class="eyebrow">Design partner ask</p>
+          <h2>Bring one redacted historical hardware change.</h2>
+          <p>AtomDelta will return a validation packet: claims, margins, rejected paths, evidence gaps, reviewer questions, and a reusable memory candidate.</p>
+        </div>
+        <span class="cta-note">Shadow case pilot</span>
+      </section>
+    </div>
+  </main>
+
+  <footer class="shell">
+    <span>AtomDelta. Validation layer for late hardware changes.</span>
+  </footer>
+</body>
+</html>
