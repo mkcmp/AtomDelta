@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="AtomDelta is the validation environment between AGI-generated engineering options and physical-world action, turning proposed branches into claims, margin checks, rejected traps, evidence gaps, and reviewer-owned validation packets.">
+  <meta name="description" content="AtomDelta is the validation layer for AI-generated hardware actions, turning proposed branches into claim-level margin checks, rejected false fixes, evidence gaps, and reviewer-owned packets before test, build, or operations.">
   <title>AtomDelta</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101827'/%3E%3Cpath d='M16 48 32 14l16 34h-8l-3-7H27l-3 7h-8Zm14-14h4l-2-5-2 5Z' fill='%23f8fafc'/%3E%3Cpath d='M42 15h7v34h-7V15Z' fill='%230f766e'/%3E%3C/svg%3E">
   <style>
@@ -463,7 +463,7 @@
       <a href="#workflow">Workflow</a>
       <a href="#proof">Demo proof</a>
       <a href="#stage">Stage</a>
-      <a href="#north-star">North Star</a>
+      <a href="#north-star">Runtime</a>
     </nav>
   </header>
 
@@ -471,24 +471,24 @@
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-main">
         <div>
-          <p class="eyebrow">AGI physical action validation</p>
-          <h1 id="hero-title">Validate engineering action before it touches hardware.</h1>
+          <p class="eyebrow">Validation layer for AI-generated engineering actions</p>
+          <h1 id="hero-title">Validate proposed hardware actions before test, build, or operations.</h1>
         </div>
         <div class="hero-copy">
-          <p><strong>AGI will create more physical engineering branches than teams can review. AtomDelta shows which ones can enter review, test, build, or operations by turning them into claims, margin checks, rejected traps, evidence gaps, and human-reviewable validation packets.</strong></p>
-          <p>Late hardware change review is the first proof loop, not the ambition: a concrete place to prove whether a proposed physical action closes the governing constraint.</p>
+          <p><strong>AI agents, vendors, solvers, labs, and engineers already create more hardware branches than review teams can safely absorb. AtomDelta rejects branches that fail governing constraints, preserves unresolved evidence gaps, and packages surviving options for human review.</strong></p>
+          <p>Late hardware change review is the first bounded proof: a real-world loop where a plausible fix can satisfy a local symptom while failing the governing constraint.</p>
         </div>
       </div>
       <aside class="hero-proof" aria-label="Current proof status">
         <article class="proof-card proof-good">
           <p class="eyebrow">Built</p>
           <strong>Working prototype</strong>
-          <p>Deterministic evaluator, margin ledger, claim ledger, review actions, packet export, rejected-branch memory, and frontend demo.</p>
+          <p>Prototype built: deterministic evaluator, claim ledger, margin ledger, rejected-branch memory, reviewer actions, and packet export. Not yet proven on customer-owned cases.</p>
         </article>
         <article class="proof-card proof-warn">
           <p class="eyebrow">Proof boundary</p>
           <strong>Synthetic/public cases</strong>
-          <p>The public demo validates product behavior; customer-reviewed shadow cases are the next milestone.</p>
+          <p>Public demo proves the workflow mechanics. Customer-reviewed shadow cases must prove review value.</p>
         </article>
         <article class="proof-card">
           <p class="eyebrow">Next proof</p>
@@ -503,9 +503,9 @@
         <div class="section-head">
           <div>
             <p class="eyebrow">What it does</p>
-            <h2 id="workflow-title">From AGI option flood to reviewable physical action.</h2>
+            <h2 id="workflow-title">From proposed branch to reviewer-owned validation packet.</h2>
           </div>
-          <p class="section-kicker">AtomDelta turns AI, human, vendor, simulator, and lab-backed proposals into testable claims, margins, rejected branches, and reviewer actions before a team commits to an unproven physical branch.</p>
+          <p class="section-kicker">AtomDelta turns AI-, vendor-, and engineer-proposed hardware changes into claim-level margin checks, rejected false fixes, evidence gaps, and reviewer-owned packets before they enter test, build, or operations.</p>
         </div>
         <div class="flow">
           <article class="step">
@@ -520,7 +520,7 @@
           </article>
           <article class="step">
             <div class="step-num">03</div>
-            <h3>Weak branches die</h3>
+            <h3>False fixes are rejected</h3>
             <p>The margin ledger checks whether a tempting fix closes the governing constraint or merely patches a local symptom while leaving the real blocker open.</p>
           </article>
           <article class="step">
@@ -535,9 +535,9 @@
         <div class="section-head">
           <div>
             <p class="eyebrow">Demo proof</p>
-            <h2 id="proof-title">The satellite case rejects the tempting fix.</h2>
+            <h2 id="proof-title">Synthetic satellite proof: battery-only branch fails the governing constraint.</h2>
           </div>
-          <p class="section-kicker">A reviewed synthetic Earth-observation bus case receives a proposed duty-cycle branch. Average power, peak power, thermal rejection, and mass move together.</p>
+          <p class="section-kicker">A synthetic Earth-observation bus case receives a proposed payload duty-cycle increase. Average power, peak power, thermal rejection, and mass move together.</p>
         </div>
         <div class="decision-strip">
           <article class="case-card">
@@ -575,9 +575,9 @@
         <div class="section-head">
           <div>
             <p class="eyebrow">Stage</p>
-            <h2 id="stage-title">The validation environment is the wedge. Outcome memory is the moat.</h2>
+            <h2 id="stage-title">The wedge is repeatable rejection. The moat is reviewer-verified outcome memory.</h2>
           </div>
-          <p class="section-kicker">The prototype demonstrates the primitive: proposed physical-action branches are validated by margin ledgers and witness evidence. Each reviewed case strengthens the environment: rejected branches, evidence standards, reviewer decisions, and platform-specific constraints become reusable outcome memory.</p>
+          <p class="section-kicker">The prototype demonstrates the primitive: proposed physical-action branches are checked against margin ledgers, source evidence, and reviewer-owned assumptions. Each reviewed case strengthens the environment: rejected branches, evidence standards, reviewer decisions, and platform-specific constraints become reusable outcome memory.</p>
         </div>
         <div class="truth-grid">
           <article class="truth-card">
@@ -586,7 +586,7 @@
           </article>
           <article class="truth-card">
             <h3>Moat to build</h3>
-            <p>The defensible layer must become outcome-linked review memory, evaluator contracts, rejected-branch patterns, and evidence standards.</p>
+            <p>The defensible layer must become reviewer-verified outcome memory, evaluator contracts, rejected-branch patterns, and evidence standards.</p>
           </article>
           <article class="truth-card">
             <h3>Falsifiable</h3>
@@ -606,17 +606,17 @@
         <div class="future">
           <article class="future-card">
             <h3>Where proposed actions become proof obligations</h3>
-            <p>AtomDelta turns the option flood from AGI systems, vendors, solvers, and humans into proof obligations, rejected branches, evidence gaps, and human-reviewable decisions.</p>
+            <p>AtomDelta turns the option flood from AI agents, vendors, solvers, labs, and engineers into proof obligations, rejected branches, evidence gaps, and human-reviewable decisions.</p>
             <ul>
-              <li>Models propose branches.</li>
-              <li>Simulators, logs, CAE, and lab benches testify as witnesses.</li>
-              <li>AtomDelta records what survives review and why.</li>
+              <li>Models, vendors, solvers, labs, and engineers propose branches.</li>
+              <li>PLM records, simulations, CAE runs, test logs, and lab measurements attach evidence.</li>
+              <li>AtomDelta records which branches failed, which survived, what evidence was missing, and what reviewers decided.</li>
             </ul>
           </article>
           <div class="code-loop" aria-label="AtomDelta loop">
-            <span>AGI / human / vendor proposes physical branch</span>
+            <span>AI agent / vendor / engineer proposes hardware branch</span>
             <span>-> AtomDelta converts it into claims</span>
-            <span>-> witnesses provide simulator, log, CAE, or lab evidence</span>
+            <span>-> source evidence attaches simulations, logs, CAE, or lab data</span>
             <span>-> margin ledger scores governing constraints</span>
             <span>-> false branches are rejected</span>
             <span>-> reviewer gaps stay open</span>
@@ -627,23 +627,23 @@
       </section>
 
       <section class="boundary" aria-label="Boundary statement">
-        <strong>Boundary: AtomDelta does not approve hardware.</strong>
-        <p>It produces validation packets for human reviewers before review, test, build, or operations. The public proof uses synthetic and public-data cases; customer-reviewed cases are the next milestone.</p>
+        <strong>Boundary: AtomDelta does not approve hardware, replace review-board authority, or certify physics.</strong>
+        <p>It produces pre-review validation packets that make proposed actions easier to reject, condition, or escalate. The public proof uses synthetic and public-data cases; customer-reviewed cases are the next milestone.</p>
       </section>
 
       <section class="cta" aria-label="Design partner call to action">
         <div>
           <p class="eyebrow">Design partner ask</p>
-          <h2>Bring one redacted historical hardware branch.</h2>
-          <p>AtomDelta will return a validation packet: claims, margins, rejected paths, evidence gaps, reviewer questions, and a reusable memory candidate.</p>
+          <h2>Bring one redacted historical hardware change where a tempting branch was debated, rejected, or conditionally approved.</h2>
+          <p>Give us the change description, affected margins, key evidence excerpts, and one reviewer. AtomDelta returns a packet and your team scores whether it would have improved the original review.</p>
         </div>
-        <span class="cta-note">Shadow case pilot</span>
+        <span class="cta-note">No integration required</span>
       </section>
     </div>
   </main>
 
   <footer class="shell">
-    <span>AtomDelta. Validation environment for AGI-enabled physical engineering action.</span>
+    <span>AtomDelta. Validation layer for AI-generated hardware actions.</span>
   </footer>
 </body>
 </html>
