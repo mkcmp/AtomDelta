@@ -483,7 +483,7 @@
           <h1 id="hero-title">Validate proposed hardware changes before they enter review, test, build, or operations.</h1>
         </div>
         <div class="hero-copy">
-          <p>AtomDelta turns AI-, vendor-, solver-, lab-, and engineer-proposed hardware branches into margin checks, rejected false fixes, evidence gaps, and reviewer-owned packets.</p>
+          <p>AtomDelta turns AI-, vendor-, solver-, lab-, and engineer-proposed hardware branches into margin checks, rejected false fixes, evidence gaps, and reviewer-owned admissibility packets.</p>
           <p class="proof-line"><strong>First proof loop:</strong> late hardware change review.</p>
         </div>
       </div>
@@ -512,9 +512,9 @@
         <div class="section-head">
           <div>
             <p class="eyebrow">What it does</p>
-            <h2 id="workflow-title">From proposed branch to reviewer-owned validation packet.</h2>
+            <h2 id="workflow-title">From proposed branch to reviewer-owned admissibility packet.</h2>
           </div>
-          <p class="section-kicker">AtomDelta turns AI-, vendor-, and engineer-proposed hardware changes into claim-level margin checks, rejected false fixes, evidence gaps, and reviewer-owned packets before they enter test, build, or operations.</p>
+          <p class="section-kicker">AtomDelta turns AI-, vendor-, and engineer-proposed hardware changes into claim-level margin checks, rejected false fixes, evidence gaps, and reviewer-owned packets before they enter review, test, build, or operations.</p>
         </div>
         <div class="flow">
           <article class="step">
@@ -535,7 +535,7 @@
           <article class="step">
             <div class="step-num">04</div>
             <h3>Humans review the packet</h3>
-            <p>The output is a replayable packet: rejected path, conditional path, margin math, evidence gaps, reviewer questions, and approval boundaries.</p>
+            <p>The output is a replayable packet: rejected branch, review candidate, margin math, evidence gaps, reviewer questions, and human-authority boundaries.</p>
           </article>
         </div>
       </section>
@@ -569,12 +569,12 @@
             </div>
           </article>
           <article class="case-card selected">
-            <p class="eyebrow">Conditional path</p>
+            <p class="eyebrow">Review candidate</p>
             <h3>Generation recovery closes the first blocker, not the whole design.</h3>
             <p>Thermal, mass, qualification, pointing, and schedule remain reviewer-owned gaps. AtomDelta preserves those unknowns instead of pretending approval.</p>
             <div class="metric-row">
               <div class="metric"><span>Average margin</span><b>+11 W</b></div>
-              <div class="metric"><span>Approval</span><b>human review required</b></div>
+              <div class="metric"><span>Authority</span><b>human review required</b></div>
             </div>
           </article>
         </div>
@@ -610,7 +610,7 @@
             <p class="eyebrow">Long-term direction</p>
             <h2 id="north-star-title">Toward a validation runtime for engineering agents in the physical world.</h2>
           </div>
-          <p class="section-kicker">Late hardware changes are the first bounded loop where the validation environment can be proven. AtomDelta starts in aerospace because it is the most compressed validation problem: every plausible physical action has to survive coupled power, thermal, mass, ops, evidence, and human approval constraints.</p>
+          <p class="section-kicker">Late hardware change review is the first controlled arena, not the company boundary: as AI makes proposed physical actions cheaper, AtomDelta exists to decide which branches are admissible before humans, labs, factories, or machines spend scarce real-world capacity.</p>
         </div>
         <div class="future">
           <article class="future-card">
@@ -637,7 +637,7 @@
 
       <section class="boundary" aria-label="Boundary statement">
         <strong>Boundary: AtomDelta does not approve hardware, replace review-board authority, or certify physics.</strong>
-        <p>It produces pre-review validation packets that make proposed actions easier to reject, condition, or escalate. The public proof uses synthetic and public-data cases; customer-reviewed cases are the next milestone.</p>
+        <p>It produces pre-review admissibility packets that make proposed actions easier to reject, route, or escalate. The public proof uses synthetic and public-data cases; customer-reviewed cases are the next milestone.</p>
       </section>
 
       <section class="cta" aria-label="Design partner call to action">
