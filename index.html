@@ -114,11 +114,11 @@
     }
 
     .hero-main {
-      min-height: 520px;
+      min-height: 410px;
       display: grid;
       align-content: end;
-      gap: 28px;
-      padding: clamp(28px, 5vw, 48px);
+      gap: 22px;
+      padding: clamp(24px, 4vw, 38px);
       background: linear-gradient(145deg, var(--navy) 0%, var(--navy-2) 58%, #0f766e 145%);
       color: #f8fafc;
       overflow: hidden;
@@ -129,7 +129,7 @@
       content: "";
       position: absolute;
       inset: auto -20% -42% 42%;
-      height: 360px;
+      height: 280px;
       border-radius: 999px;
       background: rgba(20, 184, 166, 0.14);
       filter: blur(18px);
@@ -151,8 +151,8 @@
 
     h1 {
       max-width: 780px;
-      font-size: clamp(2.85rem, 7.5vw, 6.35rem);
-      line-height: 0.9;
+      font-size: clamp(2.25rem, 5.4vw, 4.85rem);
+      line-height: 0.96;
       letter-spacing: 0;
     }
 
@@ -161,7 +161,7 @@
       display: grid;
       gap: 13px;
       color: rgba(248, 250, 252, 0.82);
-      font-size: clamp(1.05rem, 2vw, 1.24rem);
+      font-size: clamp(0.98rem, 1.5vw, 1.12rem);
       line-height: 1.42;
     }
 
@@ -427,7 +427,7 @@
         grid-template-columns: 1fr;
       }
 
-      .hero-main { min-height: 430px; }
+      .hero-main { min-height: 350px; }
       .flow,
       .truth-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .section-kicker { justify-self: stretch; }
@@ -439,7 +439,7 @@
       .nav { align-items: flex-start; flex-direction: column; }
       .hero { padding-top: 6px; }
       .hero-main { padding: 25px; }
-      h1 { font-size: clamp(2.42rem, 14vw, 3.95rem); }
+      h1 { font-size: clamp(2.05rem, 11vw, 3.35rem); }
       .flow,
       .truth-grid { grid-template-columns: 1fr; }
       .step { min-height: auto; }
@@ -472,7 +472,7 @@
       <div class="hero-main">
         <div>
           <p class="eyebrow">Validation layer for AI-generated engineering actions</p>
-          <h1 id="hero-title">Validate proposed hardware actions before test, build, or operations.</h1>
+          <h1 id="hero-title">Validate proposed hardware changes before they enter review, test, build, or operations.</h1>
         </div>
         <div class="hero-copy">
           <p><strong>AI agents, vendors, solvers, labs, and engineers already create more hardware branches than review teams can safely absorb. AtomDelta rejects branches that fail governing constraints, preserves unresolved evidence gaps, and packages surviving options for human review.</strong></p>
@@ -599,7 +599,7 @@
         <div class="section-head">
           <div>
             <p class="eyebrow">Long-term direction</p>
-            <h2 id="north-star-title">A validation runtime for engineering agents in the physical world.</h2>
+            <h2 id="north-star-title">Toward a validation runtime for engineering agents in the physical world.</h2>
           </div>
           <p class="section-kicker">Late hardware changes are the first bounded loop where the validation environment can be proven. AtomDelta starts in aerospace because it is the most compressed validation problem: every plausible physical action has to survive coupled power, thermal, mass, ops, evidence, and human approval constraints.</p>
         </div>
